@@ -1,4 +1,28 @@
+require "io/console"
 require_relative 'board'
+
+KEYMAP = {
+  " " => :space,
+  "h" => :left,
+  "j" => :down,
+  "k" => :up,
+  "l" => :right,
+  "w" => :up,
+  "a" => :left,
+  "s" => :down,
+  "d" => :right,
+  "\t" => :tab,
+  "\r" => :return,
+  "\n" => :newline,
+  "\e" => :escape,
+  "\e[A" => :up,
+  "\e[B" => :down,
+  "\e[C" => :right,
+  "\e[D" => :left,
+  "\177" => :backspace,
+  "\004" => :delete,
+  "\u0003" => :ctrl_c,
+}
 
 MOVES = {
   left: [0, -1],
@@ -67,6 +91,6 @@ class Cursor
   def update_pos(diff)
     new_pos = []
     @cursor_pos.each_with_index { |place, idx| new_pos << diff[idx] + place }
-    @cursor_pos = new_pos if board.valid_move?
+    @cursor_pos = new_pos if board.valid_pos?(new_pos)
   end
 end
