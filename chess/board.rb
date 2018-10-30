@@ -11,7 +11,11 @@ class Board
   def set_up
     @grid.each_with_index do |row, idx|
       row.each_with_index do |col, idx2|
-        col = Piece.new("red", self, [idx, idx2]) if idx == 0 || idx == 1 || idx == 6 || idx == 7
+        if idx == 0 || idx == 1 || idx == 6 || idx == 7
+          @grid[idx][idx2] = Piece.new("red", self, [idx, idx2])
+        else
+          @grid[idx][idx2] = nil
+        end
       end
     end
   end
@@ -38,5 +42,12 @@ class Board
 
   def valid_pos?(pos)
     self[pos] == nil
+  end
+
+  def invalid_pos?(pos)
+    if self.grid[pos[0]][pos[1]] != nil || pos[0] > 7 || pos[1] > 7 
+      return true
+    end
+    false
   end
 end
